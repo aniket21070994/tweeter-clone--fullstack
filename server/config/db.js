@@ -2,11 +2,11 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"
 dotenv.config(
     {
-        path:"../config/.env"
+        path: "../config/.env"
     }
 )
-const dbconnect=()=>{
+const dbconnect = () => {
     console.log(process.env.MONGO_URI)
-    mongoose.connect(process.env.MONGO_URI).then(()=>console.log("Connected to DB")).catch((err)=>console.log(err))
+    mongoose.connect(process.env.MONGO_URI).then(() => console.log("Connected to DB")).catch((err) => console.log(err))
 }
 export default dbconnect;
