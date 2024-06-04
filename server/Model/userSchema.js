@@ -6,6 +6,14 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    bookmarks:{
+        type:Array,
+        default:[]
+    },
+    email:{
+        type:String,
+        required:true
+    },
     username:{
         type:String,
         required:true
