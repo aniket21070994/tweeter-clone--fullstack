@@ -70,7 +70,7 @@ const Login = () => {
             {!isLogin && (
               <>
 
-                <input type="text" value={name} onChange={(e) => seetName(.target.value)} placeholder='Name' className='outline-blue-500 border border-gray-800 rounded-full px-3 py-1 my-1' />
+                <input type="text" value={name} onChange={(e) => seetName(e.target.value)} placeholder='Name' className='outline-blue-500 border border-gray-800 rounded-full px-3 py-1 my-1' />
                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' className='outline-blue-500 border border-gray-800 rounded-full px-3 py-1 my-1' />
               </>
             )
