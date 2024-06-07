@@ -6,8 +6,11 @@ import { IoMdLogOut } from "react-icons/io";
 import { CiHashtag } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+//geting user details from redux store 
 
 function LeftSidebar() {
+  const {user}=useSelector(store=>store.user)
   return (
     <div className='w-[20%]  '>
       <div>
@@ -41,11 +44,12 @@ function LeftSidebar() {
                   </div>
                 </div>
                 
-                <Link to="/profile">
+                <Link to={`/profile/${user?._id}`} >
                     <div className='flex items-center my-2 px-4 py-2 hover:bg-gray-300 rounded-full'>
                
                        <CiUser size='24px'/>
                        <div className='font-bold text-lg ml-2'>
+
                           <h1>Profile</h1>
                         </div>
                      </div>

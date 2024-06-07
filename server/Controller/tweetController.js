@@ -6,9 +6,9 @@ export const creatTweet = async (req, res) => {
 
     try {
 
-        const { description, id } = req.body
+        const { description, id, name, username } = req.body
         console.log(req.body)
-        if (!description || !id) {
+        if (!description || !id || !name || !username) {
             return res.status(201).json({
                 message: "Fields are requires",
                 success: false
@@ -16,7 +16,9 @@ export const creatTweet = async (req, res) => {
         }
         await Tweet.create({
             description,
-            userId: id
+            userId: id,
+            name,
+            username
         })
 
         return res.status(201).json({
@@ -49,7 +51,7 @@ export const likeOrDislike = async (req, res) => {
         const loggedInUserId = req.body.id;
         const tweetId = req.params.id;
         const tweet = await Tweet.findById(tweetId);
-        if (tweet.like.includes(loggedInUserId)) {
+        if (tweet?.like.includes(loggedInUserId)) {
             //dislike
             await Tweet.findByIdAndUpdate(tweetId, { $pull: { like: loggedInUserId } });
 

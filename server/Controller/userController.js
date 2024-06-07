@@ -72,6 +72,7 @@ export const Login = async (req, res) => {
         //Sending tokens to user using cooki
         return res.status(201).cookie("token", token, { expiresIn: "1d", httpOnly: true }).json({
             message: "Welcome back " + `${user.name}`,
+            user,
             success: true
         })
 
@@ -145,7 +146,7 @@ export const follow = async (req, res) => {
         const userId = req.params.id
         console.log(loggedInUserId)
         console.log(userId)
-        
+
         const loggedInUser = await User.findById(loggedInUserId)
         const user = await User.findById(userId)
         if (!user.followers.includes(loggedInUserId)) {
@@ -173,7 +174,7 @@ export const unfollow = async (req, res) => {
         const userId = req.params.id
         console.log(loggedInUserId)
         console.log(userId)
-        
+
         const loggedInUser = await User.findById(loggedInUserId)
         const user = await User.findById(userId)
         if (user.followers.includes(loggedInUserId)) {
@@ -185,8 +186,8 @@ export const unfollow = async (req, res) => {
         }
         else {
             return res.status(400).json({
-                message:  "User has not follow yet",
-                success:false
+                message: "User has not follow yet",
+                success: false
             })
         }
 
@@ -194,4 +195,23 @@ export const unfollow = async (req, res) => {
     catch (err) {
         console.log(err)
     }
+}
+export const uid = async (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    const user = await User.findById(id)
+    console.log(user)
+  
+        if(!user){
+            return res.status(401).json({
+                success:false,
+                message:"user not find"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            name: user.name,
+            username: user.username
+        })
+    
 }

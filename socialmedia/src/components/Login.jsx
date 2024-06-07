@@ -3,6 +3,9 @@ import { USER_API_END_POINT } from '../utils/constants'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../redux/userSlice';
+import { getUserProfile  } from '../redux/userSlice';
 const Login = () => {
   //state section 
 
@@ -12,26 +15,29 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate=useNavigate()
+  const dispatch =useDispatch()
   const submitHandler = async (e) => {
     e.preventDefault();
     if (isLogin) {
       //login
       try {
-        const res =await axios.post(`${USER_API_END_POINT}/login`, {  email, password })
+        const res =await axios.post(`${USER_API_END_POINT}/login`, { email, password },{ withCredentials: true })
         navigate("/")
+        dispatch(getUser(res?.data?.user))
+     
         if(res.data.success)
           {
                toast.success(res.data.message)
           }
         console.log(res)
       } catch (err) {
-        toast.success(err.res.data.message)
+        toast.success(err?.res?.data?.message)
         console.log(err)
       }
     } else {
       //sign up
       try {
-        const res = await axios.post(`${USER_API_END_POINT}/register`, { name,username, email, password })
+        const res = await axios.post(`${USER_API_END_POINT}/register`, { name,username, email, password }, { withCredentials: true })
         if(res.data.success)
           {
                toast.success(res.data.message)
@@ -64,7 +70,7 @@ const Login = () => {
             {!isLogin && (
               <>
 
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' className='outline-blue-500 border border-gray-800 rounded-full px-3 py-1 my-1' />
+                <input type="text" value={name} onChange={(e) => seetName(.target.value)} placeholder='Name' className='outline-blue-500 border border-gray-800 rounded-full px-3 py-1 my-1' />
                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' className='outline-blue-500 border border-gray-800 rounded-full px-3 py-1 my-1' />
               </>
             )
